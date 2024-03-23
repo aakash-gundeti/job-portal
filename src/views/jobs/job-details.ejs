@@ -1,0 +1,131 @@
+<section>
+  <div class="container py-5">
+    <a href="/jobs-listing" class="btn btn-outline-dark mb-4"><i class="fa-solid fa-arrow-left"></i></a>
+    <%if(job){%>
+        <div class="d-flex align-items-center">
+            <h1 class="me-2">Company Name: <%= job.company_name%></h1>
+            <%if(locals.userName){%>
+                <div>
+                    <button
+                        class="btn btn-outline-dark me-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#update-job"
+                    >
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <a
+                        class="btn btn-outline-danger"
+                        href="/delete-job/<%=job.id%>"
+                    >
+                        <i class="fa-solid fa-trash-can"></i>
+                    </a>
+                </div>
+            <%}%>
+        </div>
+        <h4>Role: <%= job.role%></h4>
+        <div class="mb-3">
+            <p class="">Location :-  <%= job.location %></p>
+            <p class="">Salary/Package :-  <%= job.salary %></p>
+            <p>Last date to Apply:- <%= job.last_date.toLocaleDateString()%></p>
+        </div>
+        <div class="mb-3">
+            <% job.skills.forEach(skill => { %>
+                <span type="button" class="badge bg-dark mb-2"><%= skill %></span>
+            <%})%>
+        </div>
+        <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
+
+        <!-- Button trigger modal -->
+        <%if(!locals.userName){%>
+        <button type="button" class="btn btn-outline-dark px-4" data-bs-toggle="modal" data-bs-target="#apply-now">
+            Apply Now
+        </button>
+        <%}%>
+
+        <!-- apply now Modal -->
+        <div class="modal fade" id="apply-now" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="/submit-details" method="post" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Apply for <%= job.company_name%></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="company_id" value="<%= job.id %>"/>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="full-name" name="full_name" placeholder="Full name">
+                                <label for="full-name">Full Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                <label for="email">Email</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" name="contact" class="form-control" id="contact" placeholder="Contact">
+                                <label for="contact">Contact</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="file" class="form-control" name="resume" id="resume" placeholder="Resume" accept=".pdf,.doc">
+                                <label for="resume">Resume</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- update job Modal -->
+
+        <div class="modal fade" id="update-job" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="/update-job/<%= job.id%>" method="post">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Update job</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" value="<%= job.id %>"/>
+                            <div class="form-floating mb-3">
+                                <input type="text" value="<%= job.company_name%>" class="form-control" id="company_name" name="company_name" placeholder="Company Name">
+                                <label for="company_name">Company Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" value="<%= job.role%>" class="form-control" id="role" name="role" placeholder="Role">
+                                <label for="role">Role</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" value="<%= job.location%>" class="form-control" id="location" name="location" placeholder="Location">
+                                <label for="location">Location</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" value="<%= job.skills.toString()%>" id="skills" name="skills" placeholder="Skills">
+                                <label for="skills">Skills</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" value="<%= job.salary%>" id="salary" name="salary" placeholder="Salary">
+                                <label for="salary">Salary</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" value="<%= job.last_date.toISOString().substr(0, 10)%>" id="last_date" name="last_date" placeholder="Last Date">
+                                <label for="last_date">Last Date</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <%}%>
+  </div>
+</section>

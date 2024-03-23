@@ -1,0 +1,39 @@
+<section class="d-flex flex-column justify-content-center align-items-center py-5 h-100">
+    <h1 class="mb-4">Add job</h1>
+    <%if(errors){%>
+        <ul class="bg-danger rounded border border-dark py-4">
+            <%errors.forEach((err) => {%>
+                <li class="text-white mx-2"><%= err.msg %></li>
+            <%})%>
+        </ul>
+    <%}%>
+    <form action="/create-new-job" method="post" class="text-center w-25">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Company Name">
+            <label for="company_name">Company Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="role" name="role" placeholder="Role">
+            <label for="role">Role</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="location" name="location" placeholder="Location">
+            <label for="location">Location</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="skills" name="skills" placeholder="Skills">
+            <label for="skills">Skills</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="salary" name="salary" placeholder="Salary">
+            <label for="salary">Salary</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="last_date" name="last_date" placeholder="Last Date">
+            <label for="last_date">Last Date</label>
+        </div>
+        <button type="submit" class="btn btn-dark px-5 py-2">
+            Submit
+        </button>
+    </form>
+</section>

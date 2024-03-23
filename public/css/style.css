@@ -1,0 +1,27 @@
+:root {
+    --yellow: #f8e968;
+    --orange: #ee7236;
+    --black: #10141d;
+    --gray: #717171;
+}
+
+body {
+    font-family: "Bakbak One", sans-serif;
+    font-weight: 400;
+}
+
+main {
+    height: calc(100vh - 57px);
+}
+
+#bg-home {
+    background-image: url("../images/bg-home.jpg");
+}
+
+.text-gray {
+    color: var(--gray);
+}
+
+.bg-yellow {
+    background-color: var(--yellow);
+}
